@@ -1,0 +1,48 @@
+# Android / Gradle / IntelliJ
+*.iml
+.gradle/
+**/build/
+!src/**/build/
+local.properties
+.idea/
+.kotlin/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Built application files
+*.apk
+*.aar
+*.aab
+*.apks
+*.dex
+
+# iOS / Xcode / Swift Package Manager
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/
+*.xcworkspace/
+DerivedData/
+.swiftpm/
+xcuserdata/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+Pods/
+.netrc
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Editors & Tools
+.vscode/
+.fleet/
+.vs/
+node_modules/
