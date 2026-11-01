@@ -14,13 +14,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import app.stepvana.domain.Priority
 import app.stepvana.domain.Task
+import kotlinx.datetime.LocalDate
 
 @Composable
 fun TaskListScreen(
     tasks: List<Task>,
     onTaskCheckedChange: (Long, Boolean) -> Unit,
     onAddTask: (String) -> Unit,
+    today: LocalDate,
     modifier: Modifier = Modifier,
 ) {
     var showSheet by rememberSaveable { mutableStateOf(false) }
@@ -47,6 +50,7 @@ fun TaskListScreen(
         TaskList(
             tasks = tasks,
             onTaskCheckedChange = onTaskCheckedChange,
+            today = today,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -67,16 +71,21 @@ private fun TaskListScreenPreview() {
     MaterialTheme {
         TaskListScreen(
             tasks = listOf(
-                Task(id = 1, title = "Task 1"),
-                Task(id = 2, title = "Task 2"),
-                Task(id = 3, title = "Task 3"),
-                Task(id = 4, title = "Task 4"),
-                Task(id = 5, title = "Task 5"),
-                Task(id = 6, title = "Task 6"),
-                Task(id = 7, title = "Task 7"),
+                Task(id = 1, title = "Due today", priority = Priority.HIGH, dueDate = LocalDate(2026, 10, 28)),
+                Task(id = 2, title = "Due tomorrow", priority = Priority.MEDIUM, dueDate = LocalDate(2026, 10, 29)),
+                Task(id = 3, title = "Was due yesterday", priority = Priority.CRITICAL, dueDate = LocalDate(2026, 10, 27)),
+                Task(id = 4, title = "Due later", dueDate = LocalDate(2026, 11, 9)),
+                Task(id = 5, title = "No due date"),
+                Task(id = 6, title = "Already done", dueDate = LocalDate(2026, 10, 28), isCompleted = true),
+                Task(
+                    id = 7,
+                    title = "A very long title that has to wrap onto a second line in the list",
+                    priority = Priority.LOW,
+                ),
             ),
             onTaskCheckedChange = { _, _ -> },
             onAddTask = {},
+            today = LocalDate(2026, 10, 29),
         )
     }
 }

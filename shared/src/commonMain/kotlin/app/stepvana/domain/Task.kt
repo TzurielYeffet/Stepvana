@@ -1,5 +1,7 @@
 package app.stepvana.domain
 
+import kotlinx.datetime.LocalDate
+
 
 enum class Priority(val label: String) {
     LOW("Low"),
@@ -13,7 +15,7 @@ data class Task(
     val title: String,
     val description: String = "",
     val priority: Priority = Priority.LOW,
-    val dueDate: Long? = null,
+    val dueDate: LocalDate? = null,
     val isCompleted: Boolean = false,
 
     )

@@ -21,9 +21,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.stepvana.domain.Priority
 import app.stepvana.domain.Task
+import kotlinx.datetime.LocalDate
 
 @Composable
-fun TaskItem(task: Task, onCheckedChange: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+fun TaskItem(
+    task: Task,
+    onCheckedChange: (Boolean) -> Unit,
+    today: LocalDate,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier.fillMaxWidth().padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -43,7 +49,9 @@ fun TaskItem(task: Task, onCheckedChange: (Boolean) -> Unit, modifier: Modifier 
             )
 
             Text(
-                text = task.dueDate?.toString() ?: "No date",
+                text = task.dueDate?.let { date ->
+                    formatDueDate(date = date, today = today)
+                } ?: "No date",
                 style = MaterialTheme.typography.bodySmall,
             )
         }
@@ -67,10 +75,11 @@ private fun TaskItemPreviewDate() {
                 title = "Task 1",
                 description = "Description 1",
                 priority = Priority.HIGH,
-                dueDate = 1620000000000,
+                dueDate = LocalDate(2026, 11, 2),
                 isCompleted = false,
             ),
             onCheckedChange = {},
+            today = LocalDate(2026, 10, 28)
         )
     }
 }
@@ -85,6 +94,7 @@ private fun TaskItemPreviewNoDate() {
                 title = "Task 2",
             ),
             onCheckedChange = {},
+            today = LocalDate(2026, 10, 29)
         )
     }
 }
@@ -99,6 +109,7 @@ private fun TaskItemPreviewVeryLongTitle() {
                 title = "Buy paint, rollers, tape and drop cloths for the bedroom and hallway before the weekend",
             ),
             onCheckedChange = {},
+            today = LocalDate(2026, 11, 1)
         )
     }
 }
@@ -113,6 +124,7 @@ private fun TaskItemInteractivePreview() {
             onCheckedChange = { checked ->
                 task = task.copy(isCompleted = checked)
             },
+            today = LocalDate(2026, 11, 2)
         )
     }
 }

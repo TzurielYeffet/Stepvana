@@ -11,12 +11,14 @@ import app.stepvana.ui.TaskListViewModel
 @Composable
 fun App() {
     val viewModel = viewModel { TaskListViewModel() }
+    val today by viewModel.today.collectAsStateWithLifecycle()
     val tasks by viewModel.tasks.collectAsStateWithLifecycle()
     MaterialTheme {
         TaskListScreen(
             tasks = tasks,
             onTaskCheckedChange = viewModel::onTaskCheckedChange,
             onAddTask = viewModel::addTask,
+            today = today
         )
     }
 
