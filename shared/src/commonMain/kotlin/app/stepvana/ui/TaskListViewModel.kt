@@ -87,10 +87,10 @@ class TaskListViewModel : ViewModel() {
         _tasks.update { tasks -> tasks.map { if (it.id == id) it.copy(isCompleted = checked) else it } }
     }
 
-    fun addTask(title: String) {
+    fun addTask(title: String, date: LocalDate?) {
         _tasks.update { current ->
             val nextId = (current.maxOfOrNull { it.id } ?: 0) + 1
-            current + Task(id = nextId, title = title)
+            current + Task(id = nextId, title = title, dueDate = date)
         }
     }
 }
