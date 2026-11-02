@@ -22,7 +22,7 @@ import kotlinx.datetime.LocalDate
 fun TaskListScreen(
     tasks: List<Task>,
     onTaskCheckedChange: (Long, Boolean) -> Unit,
-    onAddTask: (String) -> Unit,
+    onAddTask: (String, LocalDate?) -> Unit,
     today: LocalDate,
     modifier: Modifier = Modifier,
 ) {
@@ -57,10 +57,11 @@ fun TaskListScreen(
     if (showSheet) {
         AddTaskSheet(
             onDismiss = { showSheet = false },
-            onSave = { title ->
-                onAddTask(title)
+            onSave = { title, dueDate ->
+                onAddTask(title, dueDate)
                 showSheet = false
             },
+            today = today
         )
     }
 }
@@ -71,12 +72,32 @@ private fun TaskListScreenPreview() {
     MaterialTheme {
         TaskListScreen(
             tasks = listOf(
-                Task(id = 1, title = "Due today", priority = Priority.HIGH, dueDate = LocalDate(2026, 10, 28)),
-                Task(id = 2, title = "Due tomorrow", priority = Priority.MEDIUM, dueDate = LocalDate(2026, 10, 29)),
-                Task(id = 3, title = "Was due yesterday", priority = Priority.CRITICAL, dueDate = LocalDate(2026, 10, 27)),
+                Task(
+                    id = 1,
+                    title = "Due today",
+                    priority = Priority.HIGH,
+                    dueDate = LocalDate(2026, 10, 28)
+                ),
+                Task(
+                    id = 2,
+                    title = "Due tomorrow",
+                    priority = Priority.MEDIUM,
+                    dueDate = LocalDate(2026, 10, 29)
+                ),
+                Task(
+                    id = 3,
+                    title = "Was due yesterday",
+                    priority = Priority.CRITICAL,
+                    dueDate = LocalDate(2026, 10, 27)
+                ),
                 Task(id = 4, title = "Due later", dueDate = LocalDate(2026, 11, 9)),
                 Task(id = 5, title = "No due date"),
-                Task(id = 6, title = "Already done", dueDate = LocalDate(2026, 10, 28), isCompleted = true),
+                Task(
+                    id = 6,
+                    title = "Already done",
+                    dueDate = LocalDate(2026, 10, 28),
+                    isCompleted = true
+                ),
                 Task(
                     id = 7,
                     title = "A very long title that has to wrap onto a second line in the list",
@@ -84,7 +105,7 @@ private fun TaskListScreenPreview() {
                 ),
             ),
             onTaskCheckedChange = { _, _ -> },
-            onAddTask = {},
+            onAddTask = { _, _ -> },
             today = LocalDate(2026, 10, 29),
         )
     }
